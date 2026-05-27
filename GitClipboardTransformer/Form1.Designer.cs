@@ -33,6 +33,7 @@
             notifyIcon1 = new NotifyIcon(components);
             contextMenuStrip1 = new ContextMenuStrip(components);
             openMenuItem = new ToolStripMenuItem();
+            pauseMenuItem = new ToolStripMenuItem();
             exitMenuItem = new ToolStripMenuItem();
             labelStatus = new Label();
             labelLastTransformed = new Label();
@@ -40,13 +41,18 @@
             SuspendLayout();
 
             // contextMenuStrip1
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { openMenuItem, exitMenuItem });
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { openMenuItem, pauseMenuItem, exitMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
 
             // openMenuItem
             openMenuItem.Name = "openMenuItem";
             openMenuItem.Text = "Open";
             openMenuItem.Click += OpenMenuItem_Click;
+
+            // pauseMenuItem
+            pauseMenuItem.Name = "pauseMenuItem";
+            pauseMenuItem.Text = "Pause";
+            pauseMenuItem.Click += PauseMenuItem_Click;
 
             // exitMenuItem
             exitMenuItem.Name = "exitMenuItem";
@@ -97,6 +103,7 @@
         private NotifyIcon notifyIcon1;
         private ContextMenuStrip contextMenuStrip1;
         private ToolStripMenuItem openMenuItem;
+        private ToolStripMenuItem pauseMenuItem;
         private ToolStripMenuItem exitMenuItem;
         private Label labelStatus;
         private Label labelLastTransformed;

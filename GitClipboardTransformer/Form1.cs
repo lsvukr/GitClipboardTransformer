@@ -15,6 +15,7 @@ namespace GitClipboardTransformer
 
         private string _lastClipboardText = string.Empty;
         private bool _handleCreated = false;
+        private bool _paused = false;
         private static readonly Regex WorkItemPattern =
             new(@"^(?:Bug|Task)\s+(\d+):\s+(.+)$", RegexOptions.Compiled | RegexOptions.Singleline);
 
@@ -59,6 +60,9 @@ namespace GitClipboardTransformer
 
         private void ProcessClipboard()
         {
+            if (_paused)
+                return;
+
             try
             {
                 if (!Clipboard.ContainsText())
@@ -106,6 +110,14 @@ namespace GitClipboardTransformer
         private void OpenMenuItem_Click(object? sender, EventArgs e)
         {
             RestoreWindow();
+        }
+
+        private void PauseMenuItem_Click(object? sender, EventArgs e)
+        {
+            _paused = !_paused;
+            pauseMenuItem.Text = _paused ? "Resume" : "Pause";
+            labelStatus.Text = _paused ? "Paused" : "Monitoring clipboard...";
+            notifyIcon1.Text = _paused ? "Git Clipboard Transformer (Paused)" : "Git Clipboard Transformer";
         }
 
         private void ExitMenuItem_Click(object? sender, EventArgs e)
