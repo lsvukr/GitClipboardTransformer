@@ -36,8 +36,6 @@
             exitMenuItem = new ToolStripMenuItem();
             labelStatus = new Label();
             labelLastTransformed = new Label();
-            clipboardTimer = new System.Windows.Forms.Timer(components);
-
             contextMenuStrip1.SuspendLayout();
             SuspendLayout();
 
@@ -61,11 +59,6 @@
             notifyIcon1.Text = "Git Clipboard Transformer";
             notifyIcon1.Visible = true;
             notifyIcon1.DoubleClick += NotifyIcon1_DoubleClick;
-
-            // clipboardTimer
-            clipboardTimer.Interval = 500;
-            clipboardTimer.Tick += ClipboardTimer_Tick;
-            clipboardTimer.Start();
 
             // labelStatus
             labelStatus.AutoSize = false;
@@ -107,6 +100,5 @@
         private ToolStripMenuItem exitMenuItem;
         private Label labelStatus;
         private Label labelLastTransformed;
-        private System.Windows.Forms.Timer clipboardTimer;
     }
 }

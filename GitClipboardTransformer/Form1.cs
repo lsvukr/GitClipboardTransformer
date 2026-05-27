@@ -1,9 +1,18 @@
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace GitClipboardTransformer
 {
     public partial class Form1 : Form
     {
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool AddClipboardFormatListener(IntPtr hwnd);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool RemoveClipboardFormatListener(IntPtr hwnd);
+
+        private const int WM_CLIPBOARDUPDATE = 0x031D;
+
         private string _lastClipboardText = string.Empty;
         private bool _handleCreated = false;
         private static readonly Regex WorkItemPattern =
@@ -29,7 +38,26 @@ namespace GitClipboardTransformer
             base.SetVisibleCore(value);
         }
 
-        private void ClipboardTimer_Tick(object? sender, EventArgs e)
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            AddClipboardFormatListener(Handle);
+        }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            RemoveClipboardFormatListener(Handle);
+            base.OnHandleDestroyed(e);
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_CLIPBOARDUPDATE)
+                ProcessClipboard();
+            base.WndProc(ref m);
+        }
+
+        private void ProcessClipboard()
         {
             try
             {
@@ -60,7 +88,7 @@ namespace GitClipboardTransformer
             }
             catch
             {
-                // Clipboard access can fail when another app holds it; ignore and retry next tick.
+                // Clipboard access can fail when another app holds it; ignore and retry.
             }
         }
 
