@@ -42,7 +42,7 @@
             SuspendLayout();
 
             // contextMenuStrip1
-            contextMenuStrip1.Items.AddRange([openMenuItem, exitMenuItem]);
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { openMenuItem, exitMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
 
             // openMenuItem
