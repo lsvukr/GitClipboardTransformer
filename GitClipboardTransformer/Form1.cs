@@ -11,6 +11,13 @@ namespace GitClipboardTransformer
         public Form1()
         {
             InitializeComponent();
+            WindowState = FormWindowState.Minimized;
+            ShowInTaskbar = false;
+        }
+
+        protected override void SetVisibleCore(bool value)
+        {       
+            base.SetVisibleCore(IsHandleCreated && value);
         }
 
         private void ClipboardTimer_Tick(object? sender, EventArgs e)
@@ -72,6 +79,7 @@ namespace GitClipboardTransformer
 
         private void RestoreWindow()
         {
+            ShowInTaskbar = true;
             Show();
             WindowState = FormWindowState.Normal;
             Activate();
