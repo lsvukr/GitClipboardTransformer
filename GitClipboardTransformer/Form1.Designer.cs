@@ -29,11 +29,84 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+
+            notifyIcon1 = new NotifyIcon(components);
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            openMenuItem = new ToolStripMenuItem();
+            exitMenuItem = new ToolStripMenuItem();
+            labelStatus = new Label();
+            labelLastTransformed = new Label();
+            clipboardTimer = new System.Windows.Forms.Timer(components);
+
+            contextMenuStrip1.SuspendLayout();
+            SuspendLayout();
+
+            // contextMenuStrip1
+            contextMenuStrip1.Items.AddRange([openMenuItem, exitMenuItem]);
+            contextMenuStrip1.Name = "contextMenuStrip1";
+
+            // openMenuItem
+            openMenuItem.Name = "openMenuItem";
+            openMenuItem.Text = "Open";
+            openMenuItem.Click += OpenMenuItem_Click;
+
+            // exitMenuItem
+            exitMenuItem.Name = "exitMenuItem";
+            exitMenuItem.Text = "Exit";
+            exitMenuItem.Click += ExitMenuItem_Click;
+
+            // notifyIcon1
+            notifyIcon1.ContextMenuStrip = contextMenuStrip1;
+            notifyIcon1.Icon = new Icon(Path.Combine(AppContext.BaseDirectory, "git.ico"));
+            notifyIcon1.Text = "Git Clipboard Transformer";
+            notifyIcon1.Visible = true;
+            notifyIcon1.DoubleClick += NotifyIcon1_DoubleClick;
+
+            // clipboardTimer
+            clipboardTimer.Interval = 500;
+            clipboardTimer.Tick += ClipboardTimer_Tick;
+            clipboardTimer.Start();
+
+            // labelStatus
+            labelStatus.AutoSize = false;
+            labelStatus.Dock = DockStyle.Top;
+            labelStatus.Font = new Font("Segoe UI", 9F, FontStyle.Regular);
+            labelStatus.Height = 30;
+            labelStatus.Padding = new Padding(8, 8, 8, 0);
+            labelStatus.Text = "Monitoring clipboard...";
+
+            // labelLastTransformed
+            labelLastTransformed.AutoSize = false;
+            labelLastTransformed.Dock = DockStyle.Fill;
+            labelLastTransformed.Font = new Font("Segoe UI", 9F, FontStyle.Regular);
+            labelLastTransformed.ForeColor = Color.DarkGreen;
+            labelLastTransformed.Padding = new Padding(8, 8, 8, 8);
+            labelLastTransformed.Text = "";
+
+            // Form1
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Text = "Form1";
+            ClientSize = new Size(600, 120);
+            Controls.Add(labelLastTransformed);
+            Controls.Add(labelStatus);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = new Icon(Path.Combine(AppContext.BaseDirectory, "git.ico"));
+            MaximizeBox = false;
+            Text = "Git Clipboard Transformer";
+            Resize += Form1_Resize;
+
+            contextMenuStrip1.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private NotifyIcon notifyIcon1;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem openMenuItem;
+        private ToolStripMenuItem exitMenuItem;
+        private Label labelStatus;
+        private Label labelLastTransformed;
+        private System.Windows.Forms.Timer clipboardTimer;
     }
 }
