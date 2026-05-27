@@ -121,5 +121,12 @@ namespace GitClipboardTransformer
             WindowState = FormWindowState.Normal;
             Activate();
         }
+
+        private static Icon LoadEmbeddedIcon()
+        {
+            var assembly = typeof(Form1).Assembly;
+            using var stream = assembly.GetManifestResourceStream("GitClipboardTransformer.git.ico")!;
+            return new Icon(stream);
+        }
     }
 }

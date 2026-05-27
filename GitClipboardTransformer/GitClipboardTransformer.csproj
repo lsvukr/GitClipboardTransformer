@@ -14,9 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="git.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="git.ico" />
   </ItemGroup>
 
 </Project>

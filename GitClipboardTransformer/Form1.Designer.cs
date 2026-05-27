@@ -55,7 +55,7 @@
 
             // notifyIcon1
             notifyIcon1.ContextMenuStrip = contextMenuStrip1;
-            notifyIcon1.Icon = new Icon(Path.Combine(AppContext.BaseDirectory, "git.ico"));
+            notifyIcon1.Icon = LoadEmbeddedIcon();
             notifyIcon1.Text = "Git Clipboard Transformer";
             notifyIcon1.Visible = true;
             notifyIcon1.DoubleClick += NotifyIcon1_DoubleClick;
@@ -83,7 +83,7 @@
             Controls.Add(labelLastTransformed);
             Controls.Add(labelStatus);
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Icon = new Icon(Path.Combine(AppContext.BaseDirectory, "git.ico"));
+            Icon = LoadEmbeddedIcon();
             MaximizeBox = false;
             Text = "Git Clipboard Transformer";
             Resize += Form1_Resize;
