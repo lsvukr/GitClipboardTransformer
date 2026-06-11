@@ -69,7 +69,6 @@ namespace GitClipboardTransformer
                     return;
 
                 string text = Clipboard.GetText().Trim();
-                text = text.Replace(" - DEVELOPMENT", string.Empty).Replace(":", " ");
                 if (text == _lastClipboardText)
                     return;
 
@@ -81,6 +80,8 @@ namespace GitClipboardTransformer
 
                 string id = match.Groups[1].Value;
                 string description = match.Groups[2].Value.Trim();
+                description = description.Replace(" - DEVELOPMENT", string.Empty);
+                description = description.Replace(":", " ");
                 string transformed = $"AB#{id} {description} ai:90%";
 
                 _lastClipboardText = transformed;
