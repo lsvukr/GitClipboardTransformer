@@ -69,6 +69,7 @@ namespace GitClipboardTransformer
                     return;
 
                 string text = Clipboard.GetText().Trim();
+                text = text.Replace(" - DEVELOPMENT", string.Empty).Replace(":", " ");
                 if (text == _lastClipboardText)
                     return;
 
