@@ -13,6 +13,7 @@ namespace GitClipboardTransformer
 
         private const int WM_CLIPBOARDUPDATE = 0x031D;
 
+        private string _lastClipboardText = string.Empty;
         private bool _handleCreated = false;
         private bool _paused = false;
         private static readonly Regex WorkItemPattern =
@@ -68,7 +69,11 @@ namespace GitClipboardTransformer
                     return;
 
                 string text = Clipboard.GetText().Trim();
-                text = text.Replace(" - DEVELOPMENT", string.Empty);
+                text = text.Replace(" - DEVELOPMENT", string.Empty).Replace(":", " ");
+                if (text == _lastClipboardText)
+                    return;
+
+                _lastClipboardText = text;
 
                 var match = WorkItemPattern.Match(text);
                 if (!match.Success)
@@ -78,6 +83,7 @@ namespace GitClipboardTransformer
                 string description = match.Groups[2].Value.Trim();
                 string transformed = $"AB#{id} {description} ai:90%";
 
+                _lastClipboardText = transformed;
                 Clipboard.SetText(transformed);
 
                 labelLastTransformed.Text = transformed;
